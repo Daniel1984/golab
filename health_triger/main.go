@@ -16,12 +16,6 @@ func main() {
 func handleRequest(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "I'm on it! Will inform you ASAP!")
 
-	if err := r.ParseForm(); err != nil {
-		http.Error(w, "Error parsing form.", http.StatusBadRequest)
-		return
-	}
-
-	env := r.Form.Get("text")
-
+	env := r.FormValue("text")
 	http.Get("https://60cqrfceu4.execute-api.eu-west-1.amazonaws.com/development?env=" + env)
 }

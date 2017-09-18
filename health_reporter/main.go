@@ -29,6 +29,7 @@ var sl = []string{
 	"https://accounts-staging.hostmaker.co",
 	"https://ops-frontend-staging.hostmaker.co",
 	"https://ops-staging.hostmaker.co",
+	"https://pricing-staging.hostmaker.co",
 	"https://stay-staging.hostmaker.co",
 	"https://onboarding-staging.hostmaker.co",
 }
@@ -66,7 +67,7 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	switch env := r.Form.Get("text"); env {
+	switch env := r.FormValue("env"); env {
 	case "staging":
 		checkAllAppsStatus(sl)
 	case "dev":
