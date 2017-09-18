@@ -23,5 +23,5 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 	env := r.Form.Get("text")
 
-	http.Get("https://60cqrfceu4.execute-api.eu-west-1.amazonaws.com/development/?env=" + env)
+	http.Get("https://60cqrfceu4.execute-api.eu-west-1.amazonaws.com/development?env=" + env)
 }
