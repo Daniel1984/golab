@@ -62,11 +62,6 @@ func main() {
 }
 
 func handleRequest(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		http.Error(w, "Error parsing form.", http.StatusBadRequest)
-		return
-	}
-
 	switch env := r.FormValue("env"); env {
 	case "staging":
 		checkAllAppsStatus(sl)

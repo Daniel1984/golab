@@ -1,5 +1,8 @@
 {
   "name": "hm-bot-reporter",
   "profile": "hmbot",
-  "regions": ["eu-west-1"]
+  "regions": ["eu-west-1"],
+  "proxy": {
+    "listen_timeout": 20
+  }
 }

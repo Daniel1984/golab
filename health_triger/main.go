@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func main() {
@@ -13,9 +14,17 @@ func main() {
 	log.Fatal(http.ListenAndServe(addr, nil))
 }
 
-func handleRequest(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "I'm on it! Will inform you ASAP!")
-
-	env := r.FormValue("text")
+func notifySlack(env string) {
 	http.Get("https://60cqrfceu4.execute-api.eu-west-1.amazonaws.com/development?env=" + env)
+}
+
+func handleRequest(w http.ResponseWriter, r *http.Request) {
+	env := r.FormValue("text")
+
+	fmt.Fprintf(w, "Checking all apps for %v environment. This might take some time", env)
+
+	go notifySlack(env)
+
+	time.Sleep(1 * time.Second)
+	fmt.Println("all done!")
 }
