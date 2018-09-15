@@ -80,8 +80,9 @@ func checkAllAppsStatus(links []string) {
 
 	for i, link := range links {
 		go getAppStatus(link, ch)
-		status := <-ch
+	}
 
+	for status := range ch {
 		attachments = append(attachments, status)
 
 		if i == lastCheck {
