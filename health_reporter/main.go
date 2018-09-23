@@ -73,23 +73,18 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkAllAppsStatus(links []string) {
-	lastCheck := len(links) - 1
-
 	attachments := []SlackAttachment{}
 	ch := make(chan SlackAttachment)
 
-	for i, link := range links {
+	for _, link := range links {
 		go getAppStatus(link, ch)
 	}
 
 	for status := range ch {
 		attachments = append(attachments, status)
-
-		if i == lastCheck {
-			messages := SlackMessages{Attachments: attachments}
-			jsonVal, _ := json.Marshal(messages)
-			http.Post(statusEndpoint, "application/json", bytes.NewBuffer(jsonVal))
-		}
+		messages := SlackMessages{Attachments: attachments}
+		jsonVal, _ := json.Marshal(messages)
+		http.Post(statusEndpoint, "application/json", bytes.NewBuffer(jsonVal))
 	}
 }
 
